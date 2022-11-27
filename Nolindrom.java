@@ -38,20 +38,23 @@ public class Nolindrom {
             aux = input % 10;
             input = (long) input / 10;
             outputarray[i] = aux * (long) Math.pow(10, (l-1 - i));
-
         }
+
         for(int i = 0; i < outputarray.length; i++){
             invers = invers + outputarray[i];
         }
+
         if(org - invers == 0){
             output = true;
         } else {
             output = false;
         }
+
         return output;
     }
     
     public static void main (String[] args) {
+
         int upperlimit = Integer.parseInt(args[0]);
         long zahl;
         boolean ifnotterminate[];
@@ -63,8 +66,7 @@ public class Nolindrom {
             long erg = zahl;
             long r = 0;
             long count = 0;
-
-        
+ 
             do {
                 if (Long.MAX_VALUE - erg < inverse(erg)){
                     ifnotterminate[i] = true;
@@ -79,7 +81,6 @@ public class Nolindrom {
             }
             while(checkifpalindrom(erg) == false);
             // System.out.println("Zahl: " + i + " Palindrom: " + erg + " Iterationen: " + count);
-        
         }
 
         int numberofnumbers = 0;
