@@ -55,6 +55,12 @@ public class Nolindrom {
     
     public static void main (String[] args) {
 
+        // Enforce proper usage  
+        if (args.length == 0) {
+            System.out.println("Bitte geben Sie die Obergrenze als Parameter an.");
+            return;
+        }
+
         int upperlimit = Integer.parseInt(args[0]);
         long zahl;
         boolean ifnotterminate[];
