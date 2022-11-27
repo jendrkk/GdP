@@ -1,4 +1,5 @@
 public class Nolindrom {
+    
     public static long inverse(long input) {
 
         String inputstring = String.valueOf(input);
@@ -14,9 +15,11 @@ public class Nolindrom {
             outputarray[i] = aux * (long) Math.pow(10, (l-1 - i));
 
         }
+
         for(int i = 0; i < outputarray.length; i++){
             output = output + outputarray[i];
         }
+
         return output;
     }
 
@@ -35,20 +38,29 @@ public class Nolindrom {
             aux = input % 10;
             input = (long) input / 10;
             outputarray[i] = aux * (long) Math.pow(10, (l-1 - i));
-
         }
+
         for(int i = 0; i < outputarray.length; i++){
             invers = invers + outputarray[i];
         }
+
         if(org - invers == 0){
             output = true;
         } else {
             output = false;
         }
+
         return output;
     }
     
     public static void main (String[] args) {
+
+        // Enforce proper usage  
+        if (args.length == 0) {
+            System.out.println("Bitte geben Sie die Obergrenze als Parameter an.");
+            return;
+        }
+
         int upperlimit = Integer.parseInt(args[0]);
         long zahl;
         boolean ifnotterminate[];
@@ -56,34 +68,35 @@ public class Nolindrom {
 
         for(int i = 1; i <= upperlimit; i++){
 
-        zahl = (long) i;
-        long erg = zahl;
-        long r = 0;
-        long count = 0;
-
-        
-        do{
-            if (Long.MAX_VALUE - erg < inverse(erg)){
-                ifnotterminate[i] = true;
-                break;
-            } else { 
-
-            zahl = erg;
-            r = inverse(erg);
-            erg = erg + r;
-            count++;
+            zahl = (long) i;
+            long erg = zahl;
+            long r = 0;
+            long count = 0;
+ 
+            do {
+                if (Long.MAX_VALUE - erg < inverse(erg)){
+                    ifnotterminate[i] = true;
+                    break;
+                } 
+                else { 
+                    zahl = erg;
+                    r = inverse(erg);
+                    erg = erg + r;
+                    count++;
+                }
+            }
+            while(checkifpalindrom(erg) == false);
+            // System.out.println("Zahl: " + i + " Palindrom: " + erg + " Iterationen: " + count);
         }
-    }while(checkifpalindrom(erg) == false);
-    //System.out.println("Zahl: " + i + " Palindrom: " + erg + " Iterationen: " + count);
-}
-int numberofnumbers = 0;
-//System.out.println("these numbers: ");
-for(int i = 1; i <= upperlimit; i++){
-    if(ifnotterminate[i] == true){
-        System.out.println(i);
-        numberofnumbers++;
+
+        int numberofnumbers = 0;
+        // System.out.println("these numbers: ");
+        for(int i = 1; i <= upperlimit; i++){
+            if(ifnotterminate[i] == true){
+                System.out.println(i);
+                numberofnumbers++;
+            }
+        }
+        // System.out.println("there are: " + numberofnumbers + " such numbers");
     }
-}
-//System.out.println("there are: " + numberofnumbers + " such numbers");
-}
 } 
