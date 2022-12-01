@@ -1,7 +1,6 @@
 import java.util.Arrays;
-import java.util.function.IntPredicate;
 
-//import gdp.stdlib.*;
+import gdp.stdlib.*;
 
 public class GameOfLife {
      
@@ -81,6 +80,36 @@ public class GameOfLife {
         return output;
     }
 
+    public static void grid(boolean input, int[] size){
+        if(input){
+            for(int i = 0; i <= size[0]; i++){
+                StdDraw.setPenColor(StdDraw.BLUE);
+                StdDraw.line(size[0] , i, 0, i);
+            }
+            for(int j = 0; j <= size[1]; j++){
+                StdDraw.setPenColor(StdDraw.BLUE);
+                StdDraw.line(j , size[1], j, 0);
+            }
+        }
+        return;
+    }
+
+    public static void print(int[][] input, int[] size){
+        for(int i = 0; i < input.length; i++){
+            for(int j = 0; j < input[0].length; j++){
+                if(input[i][j] == 1){
+                    StdDraw.setPenColor(StdDraw.GREEN);
+                    StdDraw.filledSquare(0.5 + j, 0.5 + i, 0.5);
+                } else {
+                    StdDraw.setPenColor(StdDraw.WHITE);
+                    StdDraw.filledSquare(0.5 + j, 0.5 + i, 0.5);
+                }
+
+
+            }
+        }
+    }
+
     /*
     public static boolean[][] read() { 
         int N = StdIn.readInt(); 
@@ -92,20 +121,35 @@ public class GameOfLife {
         return a; 
     }
     */
-    
+
+/////////////////////////// MAIN ///////////////////////////
     
     public static void main(String[] args){
-        int rows = 10;
-        int cols = 10;
-        
-        int[][] matrix = new int[rows][cols];
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
+        int row = StdIn.readInt();
+        int col = StdIn.readInt();
+        int alive = StdIn.readInt();
+        int[][] coordinates = new int[alive][2];
+        int[][] matrix = new int[row][col];
+        int[] size = new int[2];
+        size[0] = row; size[1] = col;
+
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
                 matrix[i][j] = 0;
             }
         }
-
-        for(int k = 0; k <= 10; k++){
+        int count = 0;
+        while(!StdIn.isEmpty()){
+            coordinates[count][0] = StdIn.readInt();
+            coordinates[count][1] = StdIn.readInt();
+            count++;
+        }
+        for(int i = 0; i < alive; i++){
+            matrix[coordinates[i][0]][coordinates[i][1]] = 1;
+        }
+      
+        /*
+        for(int k = 0; k <= row; k++){
             double index1 = k * Math.random();
             int p = (int) index1;
             double index2 = k * Math.random();
@@ -114,28 +158,45 @@ public class GameOfLife {
             matrix[p][q] = 1;
         }
 
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
                 System.out.print(matrix[i][j] + "  ");
             }
             System.out.println();
             System.out.println();
         }
         System.out.println("\n");
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
+        
+        /*
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
                 System.out.print(neighbourhood(matrix)[i][j] + "  ");
             }
             System.out.println();
             System.out.println();
         }
         System.out.println("\n");
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
+        
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
                 System.out.print(nextstate(matrix)[i][j] + "  ");
             }
             System.out.println();
             System.out.println();
+        }
+        */
+        
+        StdDraw.setXscale(0, +size[0]);
+        StdDraw.setYscale(0, +size[1]);
+        print(matrix, size);
+        grid(true, size);
+        StdDraw.show(500);
+
+        while(true){
+            matrix = nextstate(matrix);
+            print(matrix, size);
+            grid(true, size);
+            StdDraw.show(500);
         }
     }
 }
