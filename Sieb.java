@@ -48,7 +48,6 @@ public class Sieb {
         int limit = 9;
         int count = 0;
         int i = 0;
-        int found = 0;
         
         do{
             limit = limit + 10*i;
@@ -65,8 +64,10 @@ public class Sieb {
             i++;
         }while(count <= n);
 
-        //System.out.println(count);
-        //System.out.println("\n" + "Primes:");
+        /*
+        System.out.println(count);
+        System.out.println("\n" + "Primes:");
+        */
         
         count = 0;
 
@@ -76,6 +77,7 @@ public class Sieb {
                 count++;
             }
         }
+        
         /*
         System.out.println("\n");
         System.out.println(limit);
