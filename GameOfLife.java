@@ -33,6 +33,7 @@ public class GameOfLife {
         return output;
     }
 
+/*                                                                                      SOME USELESS FUNCTIONS
     public static int[][] translate(boolean[][] input){
         int[][] output = new int[input.length][input[0].length];
 
@@ -62,6 +63,7 @@ public class GameOfLife {
         }
         return output;
     }
+*/
 
     public static int[][] nextstate(int[][] input){
         int[][] output = new int[input.length][input[0].length];
