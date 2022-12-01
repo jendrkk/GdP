@@ -145,7 +145,7 @@ public class GameOfLife {
             count++;
         }
         for(int i = 0; i < alive; i++){
-            matrix[coordinates[i][0]][coordinates[i][1]] = 1;
+            matrix[coordinates[i][1]][coordinates[i][0]] = 1;
         }
       
         /*
@@ -190,13 +190,13 @@ public class GameOfLife {
         StdDraw.setYscale(0, +size[1]);
         print(matrix, size);
         grid(true, size);
-        StdDraw.show(500);
+        StdDraw.show(200);
 
         while(true){
             matrix = nextstate(matrix);
             print(matrix, size);
             grid(true, size);
-            StdDraw.show(500);
+            StdDraw.show(200);
         }
     }
 }
