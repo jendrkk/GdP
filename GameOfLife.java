@@ -1,9 +1,9 @@
-import java.util.Arrays;
-
 import gdp.stdlib.*;
 
 public class GameOfLife {
-     
+
+/////////////////////////// FUNCTIONS ///////////////////////////
+
     public static int[][] neighbourhood(int[][] input){
         int[][] output = new int[input.length][input[0].length];
 
@@ -104,27 +104,17 @@ public class GameOfLife {
                     StdDraw.setPenColor(StdDraw.WHITE);
                     StdDraw.filledSquare(0.5 + j, 0.5 + i, 0.5);
                 }
-
-
             }
         }
     }
 
-    /*
-    public static boolean[][] read() { 
-        int N = StdIn.readInt(); 
-        boolean[][] a = new boolean[N][N];
-        for (int i = 0; i < N; i++){
-            for (int j = 0; j < N; j++)
-            if (StdIn.readInt() != 0) a[i][j] = true;
-        }
-        return a; 
-    }
-    */
-
 /////////////////////////// MAIN ///////////////////////////
     
     public static void main(String[] args){
+        /* 
+         * In this part of code is defined how the start configuration is loaded. It is possible because of the StdIn.readInt() function.
+         * Apart from that we define the structers (matrix, size) which are required to implementing the code.
+        */
         int row = StdIn.readInt();
         int col = StdIn.readInt();
         int alive = StdIn.readInt();
@@ -147,51 +137,18 @@ public class GameOfLife {
         for(int i = 0; i < alive; i++){
             matrix[coordinates[i][1]][coordinates[i][0]] = 1;
         }
-      
-        /*
-        for(int k = 0; k <= row; k++){
-            double index1 = k * Math.random();
-            int p = (int) index1;
-            double index2 = k * Math.random();
-            int q = (int) index2;
 
-            matrix[p][q] = 1;
-        }
-
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < col; j++){
-                System.out.print(matrix[i][j] + "  ");
-            }
-            System.out.println();
-            System.out.println();
-        }
-        System.out.println("\n");
-        
-        /*
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < col; j++){
-                System.out.print(neighbourhood(matrix)[i][j] + "  ");
-            }
-            System.out.println();
-            System.out.println();
-        }
-        System.out.println("\n");
-        
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < col; j++){
-                System.out.print(nextstate(matrix)[i][j] + "  ");
-            }
-            System.out.println();
-            System.out.println();
-        }
+        /* 
+         * In this part of code are defined commands, that are requierd to print the gird and display the starting configuration.
+         * The while-loop is responible for applying the rules of "Game of Life" and displaying every state for 200ms.
         */
-        
+      
         StdDraw.setXscale(0, +size[0]);
         StdDraw.setYscale(0, +size[1]);
         print(matrix, size);
         grid(true, size);
         StdDraw.show(200);
-
+        
         while(true){
             matrix = nextstate(matrix);
             print(matrix, size);
