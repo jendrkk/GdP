@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Sieb {
     public static boolean[] primes(int input){
         int[] remainders;
@@ -68,7 +66,7 @@ public class Sieb {
         System.out.println(count);
         System.out.println("\n" + "Primes:");
         */
-        
+
         count = 0;
 
         for(int k = 2; k <= limit; k++){
