@@ -7,8 +7,6 @@ public class Sieb {
  */
 
     public static int[] primes(int input){
-        int[] remainders;
-        remainders = new int[input];
         boolean[] aux;
         aux = new boolean[input];
         int[] primes;
@@ -16,25 +14,22 @@ public class Sieb {
         int count = 0;
 
         /*
-         * For every natural number we are using two auxiliary arrays (reminders and aux).
+         * For every natural number we are using an auxiliary array "aux".
          */
     
         for(int i = 2; i <= input; i++){                            // Loop that goes through every natural number (2<=i<=limit); candidates for prime numbers
-            for(int j = 1; j <= input; j++){                        // Loop that goes through every natural number (2<=i<=limit); the divisors (for modulo)
-                remainders[j-1] = i % j;                            // "reminders" holds every 
-            }
-            for(int k = 1; k <= input; k++){
-                if(k != i){
-                    if(remainders[k-1] != 0){
-                        aux[k-1] = false;
+            for(int j = 1; j <= i; j++){
+                if(j != i){
+                    if((i % j) != 0){
+                        aux[j-1] = false;
                     } else {
-                        aux[k-1] = true;
+                        aux[j-1] = true;
                     }
                 } else {
-                    if(remainders[k-1] == 0){
-                        aux[k-1] = true;
+                    if((i % j) == 0){
+                        aux[j-1] = true;
                     } else {
-                        aux[k-1] = false;
+                        aux[j-1] = false;
                     }
                 }
             }
