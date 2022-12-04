@@ -1,16 +1,27 @@
 public class Sieb {
-    public static boolean[] primes(int input){
+
+/*
+ * We are defining the function "primes". Its output is an array with primes and zeros to a given limit (input). When the index of this array is prime, 
+ * there's this prime number in that place, when the index isn't a prime number, then there is a "0" there. Such a definition of "primes" save time, 
+ * since we are getting ready-to-print primes as the output.
+ */
+
+    public static int[] primes(int input){
         int[] remainders;
         remainders = new int[input];
         boolean[] aux;
         aux = new boolean[input];
-        boolean[] ifprime;
-        ifprime = new boolean[input-1];
+        int[] primes;
+        primes = new int[input-1];
         int count = 0;
+
+        /*
+         * For every natural number we are using two auxiliary arrays (reminders and aux).
+         */
     
-        for(int i = 2; i <= input; i++){
-            for(int j = 1; j <= input; j++){
-                remainders[j-1] = i % j;
+        for(int i = 2; i <= input; i++){                            // Loop that goes through every natural number (2<=i<=limit); candidates for prime numbers
+            for(int j = 1; j <= input; j++){                        // Loop that goes through every natural number (2<=i<=limit); the divisors (for modulo)
+                remainders[j-1] = i % j;                            // "reminders" holds every 
             }
             for(int k = 1; k <= input; k++){
                 if(k != i){
@@ -22,6 +33,8 @@ public class Sieb {
                 } else {
                     if(remainders[k-1] == 0){
                         aux[k-1] = true;
+                    } else {
+                        aux[k-1] = false;
                     }
                 }
             }
@@ -34,13 +47,14 @@ public class Sieb {
                 }
             }
             if(count == 2){
-                ifprime[i-2] = true;
+                primes[i-2] = i;
             } else {
-                ifprime[i-2] = false;
+                primes[i-2] = 0;
             }
         }
-        return ifprime;
+        return primes;
     }
+
     public static void main (String[] args){
         int n = Integer.parseInt(args[0]);
         int limit = 9;
@@ -49,8 +63,10 @@ public class Sieb {
         
         do{
             limit = limit + 10*i;
+            int[] currentprimes = new int[limit-1];
+            currentprimes = primes(limit);
             for(int j = 0; j < limit-1; j++){
-                if(primes(limit)[j]){
+                if(currentprimes[j] != 0){
                     count++;
                  }
             }
@@ -60,27 +76,17 @@ public class Sieb {
                 count = 0;
              }
             i++;
-        }while(count <= n);
+        }while(true);
 
-        /*
-        System.out.println(count);
-        System.out.println("\n" + "Primes:");
-        */
-
+        int[] currentprimes = new int[limit-1];
+        currentprimes = primes(limit);
         count = 0;
-
+    
         for(int k = 2; k <= limit; k++){
-            if(primes(limit)[k-2] && count < n){
+            if(currentprimes[k-2] !=0 && count < n){
                 System.out.println(k);
                 count++;
             }
         }
-        
-        /*
-        System.out.println("\n");
-        System.out.println(limit);
-        System.out.println("\n");
-        System.out.println(count);
-        */
     }
 }
