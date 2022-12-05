@@ -5,7 +5,11 @@ public class GameOfLife {
 /////////////////////////// FUNCTIONS ///////////////////////////
 
 /*
- * The function "neighbourhood" is counting the number of alive neighbours of a give cell. The grid is represented 
+ * The function "neighbourhood" is counting the number of alive neighbours of a give cell. The grid is represented by a matrix of a size equal to the size
+ * imported form a given starting configuration (the argument size). The input matrix of this function is a matrix which is also imported from this configuration,
+ * with given living cells (any other cell is dead). For the purpose of finding neighbours, there has been defined a (unreadable but hopefully correct) series
+ * of if-else-statements which are examining every possible case (4 corners, 4 edges excluding corners and the "interior", so 9 cases altogether). In the output
+ * matrix there will be assigned numbers of neighbours of a spot ((i,j)-pair) at each such place, so for the whole matrix.
  */
 
     public static int[][] neighbourhood(int[][] input, int[] size){
@@ -38,7 +42,10 @@ public class GameOfLife {
     }
 
 /*
- * 
+ * The function "nextstate" is calculating the next matrix (after applying the game rules) from a given input matrix. This function is also using the size
+ * argument, since the neighbouthood function uses this argument and the "nextstate" function is the only place in the code where the "neighbourhood" function
+ * is being called. The if-statements with rules of the game of life are in a double for-loop, so that every (i,j)-pair, so every place in the input matrix, is
+ * considered. 
  */
 
     public static int[][] nextstate(int[][] input, int[] size){
@@ -59,7 +66,8 @@ public class GameOfLife {
     }
 
 /*
- * 
+ * The "gird" function is responsible for printing the blue grid, given its size. Here it's important to consider 2 cases: quadratic matrix and a (horizontally; 
+ * see the starting configurations: we have only 30x40 matrix as a not quadratic matrix) rectangular matrix.
  */
 
     public static void grid(int[] size){
@@ -87,7 +95,8 @@ public class GameOfLife {
     }
 
 /*
- * 
+ * The "print" function is responsible for printing (or overprinting) the cells. This function is visualizing the input matrix. It prints a green square for a
+ * living cell (there is 1 at (i,j) spot in the input matrix) or a white square for a dead cell (there is 0 at (i,j) spot in the input matrix).
  */
 
     public static void print(int[][] input, int[] size){
@@ -109,8 +118,10 @@ public class GameOfLife {
     public static void main(String[] args){
 
         /* 
-         * In this part of code is defined how the start configuration is loaded. It is possible because of the StdIn.readInt() function.
-         * Apart from that we define the structers (matrix, size) which are required to implementing the code.
+         * In the first part of code is defined how the start configuration is loaded. It is possible because of the StdIn.readInt() function. Firstly, we are 
+         * loading 2 numbers that correspond to the size of a grid and the number of living cells (later useful for the for-loop). Secondly, we are defining the 
+         * structures (matrix, size array) which are required to implement our code. Lastly, we are importing the coordinated of living cells and filling the
+         * starting matrix.
         */
 
         int col = StdIn.readInt();
@@ -121,24 +132,26 @@ public class GameOfLife {
         int[] size = new int[2];
         size[0] = row; size[1] = col;
 
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < col; j++){
-                matrix[i][j] = 0;
-            }
-        }
         int count = 0;
         while(!StdIn.isEmpty()){
             coordinates[count][0] = StdIn.readInt();
             coordinates[count][1] = StdIn.readInt();
             count++;
         }
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                matrix[i][j] = 0;
+            }
+        }
         for(int i = 0; i < alive; i++){
             matrix[coordinates[i][1]][coordinates[i][0]] = 1;
         }
 
         /* 
-         * In this part of code are defined commands, that are requierd to print the gird and display the starting configuration.
-         * The while-loop is responible for applying the rules of "Game of Life" and displaying every state for 200ms.
+         * In the second part of code are defined commands, that are required to print the gird and display the starting configuration.
+         * The while-loop is responsible for calling the "nextstate" function and printing the visualization of this matrix, which will be displayed each time
+         * for 200ms, then the loop begins the next iteration, which we can see as an animation. (An appropriate do-while loop can be an alternative here.)
+         * The while-loop will be repeated unless the displayed animation window will be closed by the user.
         */
 
         StdDraw.setCanvasSize(size[1]*25, size[0]*25);
