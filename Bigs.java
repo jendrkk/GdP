@@ -140,30 +140,19 @@ public class Bigs {
 
 	// multipliziert das Ziffernfeld a mit einer int-Zahl
 	static int[ ] times(int[ ] n, int d){
-		int[] longOutput = new int[n.length+1];
-		int[] output = new int[longOutput.length];
+		int[] output = new int[n.length+1];
 
 		for(int i = 0; i < n.length; i++){
-			longOutput[i] = n[i]*d;
+			output[i] = n[i]*d;
 		}
-		for(int i = 0; i < longOutput.length; i++){
-			if(longOutput[i] >= 10){
-				longOutput[i+1] = longOutput[i+1] + longOutput[i]/10;
-				longOutput[i] = longOutput[i] % 10;
-			}
-		}
-		if(longOutput[longOutput.length-1] == 0){ 
-			output = new int[longOutput.length-1];
-			for(int i = 0; i < longOutput.length-1; i++){
-				output[i] = longOutput[i];
-			}
-		} else {
-			for(int i = 0; i< longOutput.length; i++){
-				output[i] = longOutput[i];
+		for(int i = 0; i < output.length; i++){
+			if(output[i] >= 10){
+				output[i+1] = output[i+1] + output[i]/10;
+				output[i] = output[i] % 10;
 			}
 		}
 		
-		return output;
+		return removeLeadingZeroes(output);
 	}
 
     // multipliziert das Ziffernfeld n mit 10
@@ -179,7 +168,7 @@ public class Bigs {
 	
 	// multipliziert zwei Ziffernfelder	
 	static int[ ] times(int[ ]a, int[ ] b){
-		int[] longOutput = new int[a.length+b.length];
+		int[] output = new int[a.length+b.length];
 		int[][] sumMatrix = new int[b.length][a.length+b.length];
 
 		for(int i = 0; i < b.length; i++){
@@ -193,30 +182,16 @@ public class Bigs {
 			for(int j = 0; j < b.length; j++){
 				sum = sum + sumMatrix[j][i];
 			}
-			longOutput[i] = sum;
+			output[i] = sum;
 		}
-		for(int i = 0; i < longOutput.length; i++){
-			if(longOutput[i] >= 10){
-				longOutput[i+1] = longOutput[i+1] + longOutput[i]/10;
-				longOutput[i] = longOutput[i] % 10;
-			}
-		}
-
-		int count = longOutput.length;
-		while(true){
-			if(longOutput[count-1] != 0){
-				break;
-			}
-			count--;
-		}
-
-		int[] output = new int[count];
-
 		for(int i = 0; i < output.length; i++){
-			output[i] = longOutput[i];
+			if(output[i] >= 10){
+				output[i+1] = output[i+1] + output[i]/10;
+				output[i] = output[i] % 10;
+			}
 		}
-		
-		return output;
+
+		return removeLeadingZeroes(output);
 	}
 	
     // Quadratzahl eines Ziffernfeldes
@@ -279,7 +254,23 @@ public class Bigs {
     mindenstens eine Ziffer, alle Positionen liegen zwischen 0 und 9
     keine fuehrenden Nullen (ausser bei Null selbst) 
 	*/
-	//static boolean ok (int[ ] n){ /* TODO */ }
+	
+	static boolean ok(int[ ] n){
+		if(n.length == 0){
+			return false;
+		}
+		if(n[n.length-1] == 0 && n.length != 1){
+			return false;
+		}
+		for(int i = 0; i < n.length; i++){
+			if(n[i] < 0 || n[i] > 9){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 
     // gibt die (kleinste) Ziffer mit der groessten Haeufigkeit in n aus	
 	static void maxDigit(int[] n){
@@ -340,13 +331,6 @@ public class Bigs {
 		System.out.println(less(a, c)); // beantwortet die Frage aus der Aufgabenueberschrift
                 maxDigit(a);
                 maxDigit(c);
-
-
-		int [] test1 = {1,2,3};
-		int [] test2 = {9,9};
-		print(add(test1, test2));
-		print(times(test2, 6));
-		int [] test3 = {1,2,3,4,0,0};
-		print(add(test3, test1));
+				
 	}
 }
