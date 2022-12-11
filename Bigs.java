@@ -8,12 +8,16 @@ public class Bigs {
 		// checks how many leading Zeroes there are
 		int leadingZeroes = 0;
 		for (int i = 0; i < input.length; i++){
-			if (input[input.length-1-i] == 0) leadingZeroes++;
+			if (input[input.length-1-i] == 0){
+				leadingZeroes++;
+			} else {
+				break;
+			}
 		}
 
 		// initiate new output array of proper size and copy everything up to (excluding) the leading Zeroes
 		// should probably just call our copy method below? Would require some changes, though. Not worth it
-		int [] output = new int [input.length - leadingZeroes + 1];
+		int [] output = new int [input.length - leadingZeroes];
 		for (int i = 0; i < output.length; i++) {
 			output[i] = input[i];
 		}
@@ -23,63 +27,41 @@ public class Bigs {
 	}
 
 	// addiert die Ziffernfelder a und b
-	public static int[ ] add(int[ ] a, int[ ] b){
-        int length;
-		boolean aGreater = false;
-		
-		if(a.length > b.length){
-			length = a.length;
-			aGreater = true;
-		} else {
-			length = b.length;
+	public static int[ ] add (int[ ] a, int[ ] b){
+
+		// test which array is larger  
+		int max = a.length; 
+		if (max < b.length) max = b.length; 
+
+		// instead of testing for various cases (a bit more difficult than expected), we just assume the worst case of needing a bigger array
+		int [] output = new int [max+1]; 	
+
+		int carry = 0;
+
+		for (int i = 0; i < max; i++){
+
+			// to avoid IndexOutOfBoundsException, store values into temp variables and set 0 if out of bounds
+			int temp1, temp2;
+			if (i >= a.length) temp1 = 0;
+			else temp1 = a[i];
+			if (i >= b.length) temp2 = 0;
+			else temp2 = b[i];
+
+			// add the numbers plus possible carry-over. if it's higher than 9, carry the 1
+			int tempSum = temp1 + temp2 + carry;
+			if (tempSum > 9){
+				output[i] = tempSum % 10;
+				carry = 1;
+			} 
+			else {
+				output[i] = tempSum;
+				carry = 0;
+			}
 		}
 
-		int[] a_sameLength = new int[length];
-		int[] b_sameLength = new int[length];
-		
-		for(int i = 0; i < length; i++){
-			if(i < a.length){
-				a_sameLength[i] = a[i];
-			} else {
-				a_sameLength[i] = 0;
-			}
-			if(i < b.length){
-				b_sameLength[i] = b[i];
-			} else {
-				b_sameLength[i] = 0;
-			}
-		}
-
-		int[] output = new int[length];
-
-		if(a_sameLength[length-1] + b_sameLength[length-1] >= 10){
-			output = new int[length+1];
-			output[output.length-1] = 0;
-		}
-		if(aGreater){
-			if(a_sameLength[b.length-1] + b_sameLength[b.length-1] >= 10){
-				output = new int[length+1];
-				output[output.length-1] = 0;
-		}
-		} else {
-			if(a_sameLength[a.length-1] + b_sameLength[a.length-1] >= 10){
-				output = new int[length+1];
-				output[output.length-1] = 0;
-			}
-		}
-		
-		for(int i = 0; i < length; i++){
-			output[i] = a_sameLength[i] + b_sameLength[i];
-		}
-		for(int i = 0; i < output.length; i++){
-			if(output[i] >= 10){
-				output[i+1] = output[i+1] + output[i]/10;
-				output[i] = output[i] % 10;
-			}
-		}
-		
+		// before returning, remove leading Zeroes 
 		return removeLeadingZeroes(output);
-    }
+	}
 	
 	
 	// gibt das Ziffernfeld n in lesbarer dezimaler Form aus
@@ -364,5 +346,7 @@ public class Bigs {
 		int [] test2 = {9,9};
 		print(add(test1, test2));
 		print(times(test2, 6));
+		int [] test3 = {1,2,3,4,0,0};
+		print(add(test3, test1));
 	}
 }
