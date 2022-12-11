@@ -1,7 +1,27 @@
-import java.util.Arrays;
-
 public class Bigs {
 	
+	public static int[] removeLeadingZeroes(int [] input){
+
+		// for optimisation, check if this is even necessary
+		if (input[input.length - 1] != 0) return input;
+
+		// checks how many leading Zeroes there are
+		int leadingZeroes = 0;
+		for (int i = input.length - 1; i >= 0; i--){
+			if (input[i] == 0) leadingZeroes++;
+		}
+
+		// initiate new output array of proper size and copy everything up to (excluding) the leading Zeroes
+		// should probably just call our copy method below? Would require some changes, though. Not worth it
+		int [] output = new int [input.length - leadingZeroes];
+		for (int i = 0; i < output.length; i++) {
+			output[i] = input[i];
+		}
+
+		return output;
+
+	}
+
 	// addiert die Ziffernfelder a und b
 	public static int[ ] add(int[ ] a, int[ ] b){
         int length;
@@ -47,7 +67,6 @@ public class Bigs {
 				output[output.length-1] = 0;
 			}
 		}
-		
 		
 		for(int i = 0; i < length; i++){
 			output[i] = a_sameLength[i] + b_sameLength[i];
@@ -161,6 +180,7 @@ public class Bigs {
 				output[i] = longOutput[i];
 			}
 		}
+		
 		return output;
 	}
 
@@ -232,7 +252,27 @@ public class Bigs {
 	}
 	
 	// Test auf kleiner-Relation zweier Ziffernfelder: a < b ?
-	//static boolean less (int[ ] a, int[ ] b) { /* TODO */ }
+	static boolean less (int[ ] a, int[ ] b) {
+
+		// first check if one is bigger than the other (after removing potential leading zeroes)
+		if (removeLeadingZeroes(a).length < removeLeadingZeroes(b).length) return true;
+
+		// make sure they're not equal
+		if (equal(a, b)) return false;
+
+
+		// only if the easy checks above don't return a result, go through each value/position
+		// start at the end as that's the highest decimal place
+		for (int i = a.length - 1; i >= 0; i--) {
+			if (a[i] == b[i]) continue;
+			if (a[i] < b[i]) return true;
+			if (a[i] > b[i]) return false;
+		}
+
+		// IDE complains that it needs to return something. It should never get here, but if it does...
+		return false;
+
+	}
 
 	// Test auf Gleichheit zweier Ziffernfelder
 	static boolean equal (int[ ] a, int[ ] b){
@@ -246,7 +286,7 @@ public class Bigs {
 				}
 			}
 		}
-		if(count == a.length){
+		if(a.length == b.length && count == a.length){
 			output = true;
 		}
 		return output;
@@ -257,7 +297,7 @@ public class Bigs {
     mindenstens eine Ziffer, alle Positionen liegen zwischen 0 und 9
     keine fuehrenden Nullen (ausser bei Null selbst) 
 	*/
-	//static boolean ok (int[ ] n)             { /* TODO */ }
+	//static boolean ok (int[ ] n){ /* TODO */ }
 
     // gibt die (kleinste) Ziffer mit der groessten Haeufigkeit in n aus	
 	static void maxDigit(int[] n){
@@ -284,8 +324,6 @@ public class Bigs {
                 }  
             }  
         }
-		System.out.println(Arrays.toString(probArray));
-		System.out.println(Arrays.toString(sortedArray));
 		for(int i = 0; i < 10; i++){
 			if(probArray[i] == sortedArray[9]){
 				System.out.println(i);
@@ -316,12 +354,10 @@ public class Bigs {
 		System.out.println("13^8978 hat " + c.length + " Stellen");
 		print(c); 
 		System.out.println(); 
-		/*
+		
 		System.out.println(less(a, c)); // beantwortet die Frage aus der Aufgabenueberschrift
                 maxDigit(a);
                 maxDigit(c);
-         */
 
 	}
 }
-
