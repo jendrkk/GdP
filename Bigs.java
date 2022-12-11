@@ -7,13 +7,13 @@ public class Bigs {
 
 		// checks how many leading Zeroes there are
 		int leadingZeroes = 0;
-		for (int i = input.length - 1; i >= 0; i--){
-			if (input[i] == 0) leadingZeroes++;
+		for (int i = 0; i < input.length; i++){
+			if (input[input.length-1-i] == 0) leadingZeroes++;
 		}
 
 		// initiate new output array of proper size and copy everything up to (excluding) the leading Zeroes
 		// should probably just call our copy method below? Would require some changes, though. Not worth it
-		int [] output = new int [input.length - leadingZeroes];
+		int [] output = new int [input.length - leadingZeroes + 1];
 		for (int i = 0; i < output.length; i++) {
 			output[i] = input[i];
 		}
@@ -78,7 +78,7 @@ public class Bigs {
 			}
 		}
 		
-		return output;
+		return removeLeadingZeroes(output);
     }
 	
 	
@@ -359,5 +359,10 @@ public class Bigs {
                 maxDigit(a);
                 maxDigit(c);
 
+
+		int [] test1 = {1,2,3};
+		int [] test2 = {9,9};
+		print(add(test1, test2));
+		print(times(test2, 6));
 	}
 }
