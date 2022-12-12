@@ -337,7 +337,7 @@ public class Bigs {
         }
 		for(int i = 0; i < 10; i++){
 			if(probArray[i] == sortedArray[9]){
-				System.out.println(i);
+				System.out.println(i + ": " + sortedArray[9]);
 				break;
 			}
 		}
