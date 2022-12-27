@@ -1,8 +1,7 @@
 public class ArmstrongNumbers {
 	public static void main(String[] args) {
-		int[] test = giveArmstrongNumbers(30);
-		// 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407, 1634
-		printArray(test);
+		int n = Integer.parseInt(args[0]);
+		printArray(giveArmstrongNumbers(n));
 	}
 
 	public static boolean isArmstrongNumber(int number) {
