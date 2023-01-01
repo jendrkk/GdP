@@ -1,5 +1,3 @@
-import java.beans.Transient;
-
 import gdp.stdlib.*;
 
 public class PythagorasTree {
@@ -10,6 +8,16 @@ public class PythagorasTree {
         StdDraw.line(coordinates[0][2], coordinates[1][2], coordinates[0][3], coordinates[1][3]);
         StdDraw.line(coordinates[0][3], coordinates[1][3], coordinates[0][0], coordinates[1][0]);
 
+        StdDraw.setPenColor(StdDraw.BLUE);
+        StdDraw.filledCircle(coordinates[0][0], coordinates[1][0], 0.02);
+        StdDraw.setPenColor(StdDraw.RED);
+        StdDraw.filledCircle(coordinates[0][1], coordinates[1][1], 0.02);
+        StdDraw.setPenColor(StdDraw.GREEN);
+        StdDraw.filledCircle(coordinates[0][2], coordinates[1][2], 0.02);
+        StdDraw.setPenColor(StdDraw.YELLOW);
+        StdDraw.filledCircle(coordinates[0][3], coordinates[1][3], 0.02);
+        StdDraw.setPenColor(StdDraw.BLACK);
+        
         return;
     }
 
@@ -17,16 +25,9 @@ public class PythagorasTree {
         double[][] newCoordinates = new double[2][4];
 
         for(int i = 0; i < 4; i++){
-            if(angle > 0){
-                newCoordinates[0][i] = (coordinates[0][i] * Math.cos(angle)) - (coordinates[1][i] * Math.sin(angle));
-                newCoordinates[1][i] = (coordinates[0][i] * Math.sin(angle)) + (coordinates[1][i] * Math.cos(angle));
-            } else if (angle < 0){
-                double new_angle = Math.PI/2 + angle;
-
-                newCoordinates[0][i] = (coordinates[0][i] * Math.sin(new_angle)) - (coordinates[1][i] * Math.cos(new_angle));
-                newCoordinates[1][i] = (coordinates[0][i] * Math.cos(new_angle)) + (coordinates[1][i] * Math.sin(new_angle));
+            newCoordinates[0][i] = (coordinates[0][i] * Math.cos(angle)) - (coordinates[1][i] * Math.sin(angle));
+            newCoordinates[1][i] = (coordinates[0][i] * Math.sin(angle)) + (coordinates[1][i] * Math.cos(angle));
             }
-        }
 
         return newCoordinates;
     }
@@ -35,16 +36,8 @@ public class PythagorasTree {
         double[][] newCoordinates = new double[2][4];
 
         for(int i = 0; i < 4; i++){
-            if(angle > 0){
-                newCoordinates[0][i] = coordinates[0][i] * Math.cos(angle);
-                newCoordinates[1][i] = coordinates[1][i] * Math.cos(angle);
-            } else if(angle < 0){
-                double new_angle = Math.PI/2 + angle;
-
-
-                newCoordinates[0][i] = coordinates[0][i] * Math.cos(new_angle);
-                newCoordinates[1][i] = coordinates[1][i] * Math.cos(new_angle);
-            }
+            newCoordinates[0][i] = coordinates[0][i] * Math.cos(angle);
+            newCoordinates[1][i] = coordinates[1][i] * Math.cos(angle);
         }
 
         return newCoordinates;
@@ -77,11 +70,12 @@ public class PythagorasTree {
             newCoordinates[1][3] = newCoordinates[1][0] + verticalVector[1];
 
         } else if(angle < 0){
+            
             newCoordinates[0][1] = coordinates[0][2];
             newCoordinates[1][1] = coordinates[1][2];
             
-            newCoordinates[0][0] = newCoordinates[0][1] + horizontalVector[0];
-            newCoordinates[1][0] = newCoordinates[1][1] + horizontalVector[1];
+            newCoordinates[0][0] = newCoordinates[0][1] - horizontalVector[0];
+            newCoordinates[1][0] = newCoordinates[1][1] - horizontalVector[1];
 
             newCoordinates[0][2] = newCoordinates[0][1] + verticalVector[0];
             newCoordinates[1][2] = newCoordinates[1][1] + verticalVector[1];
@@ -99,13 +93,24 @@ public class PythagorasTree {
 
         drawSquare(coordinates);
 
-        double angle; 
+        double alpha; 
         do{
-        angle = Math.PI/2 * Math.random();
-        } while(angle <= Math.PI/6 || angle > Math.PI/3);
+            alpha = Math.PI/2 * Math.random();
+        } while(alpha <= Math.PI/6 || alpha > Math.PI/3);
 
-        double[][] new_coordinates1 = fasten(coordinates, angle);
-        double[][] new_coordinates2 = fasten(coordinates, - angle);
+        alpha = Math.PI/6;
+
+        double[][] new_coordinates1 = fasten(coordinates, alpha);
+        double[][] new_coordinates2 = fasten(coordinates, - (Math.PI/2 - alpha));
+
+        /*
+        System.out.println(Arrays.toString(new_coordinates1[0]));
+        System.out.println(Arrays.toString(new_coordinates1[1]));
+        System.out.println();
+        System.out.println(Arrays.toString(new_coordinates2[0]));
+        System.out.println(Arrays.toString(new_coordinates2[1]));
+        System.out.println();
+        */
 
         draw(n-1, new_coordinates1);
         draw(n-1, new_coordinates2);
@@ -118,5 +123,6 @@ public class PythagorasTree {
         StdDraw.setYscale(0, 1);
         double[][] coordinates = {{-0.125,0.125,0.125,-0.125},{0,0,0.25,0.25}}; 
         draw(N, coordinates);
+
     }
 }
