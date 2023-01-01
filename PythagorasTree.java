@@ -8,6 +8,7 @@ public class PythagorasTree {
         StdDraw.line(coordinates[0][2], coordinates[1][2], coordinates[0][3], coordinates[1][3]);
         StdDraw.line(coordinates[0][3], coordinates[1][3], coordinates[0][0], coordinates[1][0]);
 
+        /*
         StdDraw.setPenColor(StdDraw.BLUE);
         StdDraw.filledCircle(coordinates[0][0], coordinates[1][0], 0.02);
         StdDraw.setPenColor(StdDraw.RED);
@@ -17,7 +18,8 @@ public class PythagorasTree {
         StdDraw.setPenColor(StdDraw.YELLOW);
         StdDraw.filledCircle(coordinates[0][3], coordinates[1][3], 0.02);
         StdDraw.setPenColor(StdDraw.BLACK);
-        
+         */
+
         return;
     }
 
@@ -70,7 +72,7 @@ public class PythagorasTree {
             newCoordinates[1][3] = newCoordinates[1][0] + verticalVector[1];
 
         } else if(angle < 0){
-            
+
             newCoordinates[0][1] = coordinates[0][2];
             newCoordinates[1][1] = coordinates[1][2];
             
@@ -93,12 +95,7 @@ public class PythagorasTree {
 
         drawSquare(coordinates);
 
-        double alpha; 
-        do{
-            alpha = Math.PI/2 * Math.random();
-        } while(alpha <= Math.PI/6 || alpha > Math.PI/3);
-
-        alpha = Math.PI/6;
+        double alpha = Math.random() * Math.PI/6 + Math.PI/6;
 
         double[][] new_coordinates1 = fasten(coordinates, alpha);
         double[][] new_coordinates2 = fasten(coordinates, - (Math.PI/2 - alpha));
@@ -119,8 +116,8 @@ public class PythagorasTree {
     
     public static void main(String[] args) {
         int N = Integer.parseInt(args[0]);
-        StdDraw.setXscale(-0.5, 0.5);
-        StdDraw.setYscale(0, 1);
+        StdDraw.setXscale(-1, 1);
+        StdDraw.setYscale(0, 2);
         double[][] coordinates = {{-0.125,0.125,0.125,-0.125},{0,0,0.25,0.25}}; 
         draw(N, coordinates);
 
