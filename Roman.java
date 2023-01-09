@@ -1,5 +1,12 @@
 public class Roman {
 
+    /*
+     * roman() is a recursive defined function with a string as an output.
+     * The final sting is produced as a (concatenated) sequence of strings generated as the reduction of the number, which is to be translated to roman notation, continues. Eventually the reduction reaches
+     * the base case, i.e. number = 0, which isn't reducible, and in roman notation is an empty space.
+     * The sequence of if-else-statements is responsible for considering every case which can occur during the translation, including those when a character should be before the other (main) character (CM for 900 or IX for 9).
+     */
+
     public static String roman(int n) {
         String output;
 
@@ -46,6 +53,12 @@ public class Roman {
         
         return output = "";
     }
+
+    /*
+     * In the section main() there are 2 "error notification". The first one is activated, when there isn't given any command line argument and 
+     * the other one, when the number N exceeds the assumed boundaries from the task formulation.
+     * If everything is okk with the parameters, the output of roman() (i.e. String) for N as the argument is printed.
+     */
 
     public static void main(String[] args) {
 
