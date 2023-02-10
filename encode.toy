@@ -1,0 +1,45 @@
+/******************************************************************************
+ *  Description: Encoder for hamming code
+ *  Input: sequence of bits (a message)
+ *  Output: sequence of bits (an encoded message)
+ ******************************************************************************/
+
+read R[A] from StdIn, if R[A]+1 == 0, it means that R[A] = FFFF, so there are 
+no more inputs to be read and the algorithm can terminate.
+
+10: 8AFF   read R[A]                     
+11: 7E01   R[E] <- 0001                  
+12: 1FEA   R[F] <- R[E] + R[A]           
+13: CF25   if (R[F] == 0) goto 25        
+
+read other bits (i.e. B, C, D)
+
+14: 8BFF   read R[B]                     
+15: 8CFF   read R[C]                     
+16: 8DFF   read R[D]                     
+
+XOR statements: computation of parity bits
+
+17: 41AB   R[1] <- R[A] ^ R[B]           
+18: 411D   R[1] <- R[1] ^ R[D]           
+
+19: 42AC   R[2] <- R[A] ^ R[C]           
+1A: 422D   R[2] <- R[2] ^ R[D]           
+
+1B: 43BC   R[3] <- R[B] ^ R[C]           
+1C: 433D   R[3] <- R[3] ^ R[D]           
+
+output of the encoded sequence:
+
+1D: 9AFF   write R[A]                    
+1E: 9BFF   write R[B]                    
+1F: 9CFF   write R[C]                    
+20: 9DFF   write R[D]                    
+21: 91FF   write R[1]                    
+22: 92FF   write R[2]                    
+23: 93FF   write R[3]                    
+
+24: C011   goto 11                       "closure" of the loop
+
+25: 0000   halt                          end
+

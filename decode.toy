@@ -1,0 +1,93 @@
+/******************************************************************************
+ *  Description: decoder for hamming code
+ *  Input: sequence of bits (an encoded, possibly disorted message)
+ *  Output: sequence of bits (a decoded message)
+ ******************************************************************************/
+
+read A, if R[A]+1 == 0, it means that R[A] = FFFF and the algorithm can terminate
+
+10: 7901   R[9] <- 0001                  
+11: 8AFF   read R[A]                     
+12: 189A   R[8] <- R[9] + R[A]           
+13: C841   if (R[8] == 0) goto 41        
+
+read the remaining bits (i.e. B, C, D, 1, 2, 3)
+
+14: 8BFF   read R[B]                     
+15: 8CFF   read R[C]                     
+16: 8DFF   read R[D]                     
+
+17: 81FF   read R[1]                     
+18: 82FF   read R[2]                     
+19: 83FF   read R[3]                     
+
+check if parity btis are correct
+
+1A: 411A   R[1] <- R[1] ^ R[A]           
+1B: 411B   R[1] <- R[1] ^ R[B]           
+1C: 411D   R[1] <- R[1] ^ R[D]           c1
+
+1D: 422A   R[2] <- R[2] ^ R[A]           
+1E: 422C   R[2] <- R[2] ^ R[C]           
+1F: 422D   R[2] <- R[2] ^ R[D]           c2
+
+20: 433B   R[3] <- R[3] ^ R[B]           
+21: 433C   R[3] <- R[3] ^ R[C]           
+22: 433D   R[3] <- R[3] ^ R[D]           c3
+
+auxiiliary values: 2 and 3
+
+23: 7E02   R[E] <- 0002                  
+24: 7F03   R[F] <- 0003                  
+
+bit correction if necessary:             
+
+25: 1712   R[7] <- R[1] + R[2]           
+26: 1473   R[4] <- R[7] + R[3]           
+27: 244F   R[4] <- R[4] - R[F]           
+28: C42A   if (R[4] == 0) goto 2A        c1+c2+c3==3?
+29: C02C   goto 2C                       
+2A: 4D9D   R[D] <- R[9] ^ R[D]           1 XOR m4                       
+2B: C03C   goto 3C                       
+
+2C: 277E   R[7] <- R[7] - R[E]                               
+2D: C72F   if (R[7] == 0) goto 2F        c1+c2==2?
+2E: C031   goto 31                       
+2F: 4A9A   R[A] <- R[9] ^ R[A]           1 XOR m1                       
+30: C03C   goto 3C                       
+
+31: 1513   R[5] <- R[1] + R[3]             
+32: 255E   R[5] <- R[5] - R[E]           
+33: C535   if (R[5] == 0) goto 35        c1+c3==2?
+34: C037   goto 37                       
+35: 4B9B   R[B] <- R[9] ^ R[B]           1 XOR m2                       
+36: C03C   goto 3C                       
+
+37: 1623   R[6] <- R[2] + R[3]                            
+38: 266E   R[6] <- R[6] - R[E]           
+39: C63B   if (R[6] == 0) goto 3B        c2+c3==2?
+3A: C03C   goto 3C                       
+3B: 4C9C   R[C] <- R[9] ^ R[C]           1 XOR m3
+
+output of decoded bit sequence
+
+3C: 9AFF   write R[A]                    
+3D: 9BFF   write R[B]                    
+3E: 9CFF   write R[C]                    
+3F: 9DFF   write R[D]                                     
+
+40: C011   goto 11                       
+41: 0000   halt                          end
+
+
+
+
+
+
+
+
+
+
+
+
+
