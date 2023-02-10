@@ -5,6 +5,11 @@ public class Tribonacci{
         System.out.println(getTribonacci(n));
         System.out.println(iterativeTribonacci(n));}
 
+        boolean a = false;
+        boolean b = true;
+        boolean c = true;
+        System.out.println(majority(a, b, c));
+
     }
 
     public static int getTribonacci(int n){
@@ -28,5 +33,9 @@ public class Tribonacci{
         }
     
         return tri;
+    }
+
+    public static boolean majority(boolean first, boolean second, boolean third){
+        return (first && second) || third;
     }
 }
